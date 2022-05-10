@@ -8,6 +8,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 
+from mnists.models.classifier import C8SteerableCNN
 from mnists.models.classifier import CNN
 from mnists.dataloader import get_tensor_dataloaders, TENSOR_DATASETS
 
@@ -55,7 +56,8 @@ def test(model, device, test_loader):
 
 def main(args):
     # model and dataloader
-    model = CNN()
+    #model = CNN()
+    model = C8SteerableCNN()
     dl_train, dl_test = get_tensor_dataloaders(args.dataset, args.batch_size)
 
     # Optimizer
