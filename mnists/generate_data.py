@@ -26,8 +26,9 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
 
         # generate rotation angle
         transform = transforms.Compose([
-            transforms.RandomRotation(180),
+            transforms.RandomAffine(degrees=180, translate=None, scale=None, shear=None),
         ])
+        # mask = transform(mask)
         for i, m in enumerate(mask):
             mask[i] = transform(m)
 
