@@ -5,6 +5,9 @@ import torch
 import repackage
 repackage.up()
 
+# new
+from torchvision import transforms
+
 from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
 from utils import load_cfg
@@ -20,6 +23,13 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
         # generate initial mask
         y_gen = torch.randint(n_classes, (cgn.batch_size,)).to(device)
         mask, _, _ = cgn(y_gen)
+
+        # generate rotation angle
+        transform = transforms.Compose([
+            transforms.RandomRotation(180),
+        ])
+        for i, m in enumerate(mask):
+            mask[i] = transform(m)
 
         # generate counterfactuals, i.e., same masks, foreground/background vary
         for _ in range(no_cfs):
