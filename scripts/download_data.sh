@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Download Colored MNIST
+# URL does not work. Download manually
 gdown https://drive.google.com/u/0/uc?export=download&confirm=rHtT&id=1NSv4RCSHjcHois3dXjYw_PaLIoVlLgXu
 tar -xzvf colored_mnist.tar.gz
 mv colored_mnist mnists/data
