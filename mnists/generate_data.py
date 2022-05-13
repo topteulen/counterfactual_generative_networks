@@ -7,10 +7,21 @@ repackage.up()
 
 # new
 from torchvision import transforms
+from torchvision.transforms.functional import InterpolationMode
 
 from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
 from utils import load_cfg
+
+class transform_to_masks():
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, x):
+        return (x > x.mean()*2 + self.threshold).int()
+
+    def __repr__(self):
+        return "Make the image a mask"
 
 def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
     x, y = [], []
@@ -26,11 +37,13 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
 
         # generate rotation angle
         transform = transforms.Compose([
-            transforms.RandomAffine(degrees=180, translate=None, scale=None, shear=None),
+            transforms.RandomAffine(degrees=180, translate=(0.1, 0.1), scale=None, shear=None, interpolation=InterpolationMode.BILINEAR),
+            transform_to_masks(0.2)
         ])
-        # mask = transform(mask)
-        for i, m in enumerate(mask):
-            mask[i] = transform(m)
+
+        with torch.no_grad():
+            for i, m in enumerate(mask):
+                mask[i] = transform(m)
 
         # generate counterfactuals, i.e., same masks, foreground/background vary
         for _ in range(no_cfs):

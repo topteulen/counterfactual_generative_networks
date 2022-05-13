@@ -29,3 +29,5 @@ tags
 !imagenet/data/u_fixed.pth
 
 bg_challenge/*
+
+uc?export=download
