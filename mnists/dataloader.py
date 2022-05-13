@@ -9,21 +9,20 @@ from torch import tensor
 from torchvision import transforms
 from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader, TensorDataset
+from utils import transform_to_masks
+
+"""
+NOTE: TODO, to test the neural networks on original data combine 0.02 and 0.025 train and split them into train test.
+"""
+
 
 class ColoredMNIST(Dataset):
-    def __init__(self, train, color_var=0.02):
+    def __init__(self, train=True, counterfactual=False, rotate=0, translate=None, scale=None, shear=None):
         # get the colored mnist
-        self.data_path = 'mnists/data/colored_mnist/mnist_10color_jitter_var_%.03f.npy'%color_var
+        self.data_path = 'mnists/data/colored_mnist/mnist_10color_double_testsets_jitter_var_0.02+0.025.npy'
         data_dic = np.load(self.data_path, encoding='latin1', allow_pickle=True).item()
 
-        if train:
-            self.ims = data_dic['train_image']
-            self.labels = tensor(data_dic['train_label'], dtype=torch.long)
-        else:
-            self.ims = data_dic['test_image']
-            self.labels = tensor(data_dic['test_label'], dtype=torch.long)
-
-        self.T = transforms.Compose([
+        transform = [
             transforms.ToPILImage(),
             transforms.Resize((32, 32), Image.NEAREST),
             transforms.ToTensor(),
@@ -33,8 +32,25 @@ class ColoredMNIST(Dataset):
             ),
         ])
 
+        if train:
+            self.ims = data_dic['train_image']
+            self.labels = tensor(data_dic['train_label'], dtype=torch.long)
+        elif not counterfactual:
+            self.ims = data_dic['test_image']
+            self.labels = tensor(data_dic['test_label'], dtype=torch.long)
+        else:
+            self.ims = data_dic['counterfactual_image']
+            self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
+            transform += [
+                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear),
+                transform_to_masks(),
+            ]
+
+        self.transform = transforms.Compose(transform)
+
+
     def __getitem__(self, idx):
-        ims, labels = self.T(self.ims[idx]), self.labels[idx]
+        ims, labels = self.transform(self.ims[idx]), self.labels[idx]
 
         ret = {
             'ims': ims,
@@ -176,13 +192,17 @@ def get_dataloaders(dataset, batch_size, workers):
 
     ds_train = MNIST(train=True)
     ds_test = MNIST(train=False)
+    ds_counterfactual = MNIST(train=False, counterfactual=True, rotate=0, translate=None, scale=None, shear=None)
+
 
     dl_train = DataLoader(ds_train, batch_size=batch_size,
                           shuffle=True, num_workers=workers)
     dl_test = DataLoader(ds_test, batch_size=batch_size*2,
                          shuffle=False, num_workers=workers)
+    dl_counterfactual = DataLoader(ds_counterfactual, batch_size=batch_size*2,
+                         shuffle=False, num_workers=workers)
 
-    return dl_train, dl_test
+    return dl_train, dl_test, dl_counterfactual
 
 TENSOR_DATASETS = ['colored_MNIST', 'colored_MNIST_counterfactual',
                    'double_colored_MNIST', 'double_colored_MNIST_counterfactual',

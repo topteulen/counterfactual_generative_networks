@@ -76,11 +76,12 @@ if __name__ == "__main__":
     # Generate the dataset
     if not args.weight_path:
         # get dataloader
-        dl_train, dl_test = get_dataloaders(args.dataset, batch_size=1000, workers=8)
+        dl_train, dl_test, dl_counterfactual = get_dataloaders(args.dataset, batch_size=1000, workers=8)
 
         # generate
         generate_dataset(dl=dl_train, path=args.dataset + '_train.pth')
         generate_dataset(dl=dl_test, path=args.dataset + '_test.pth')
+        generate_dataset(dl=dl_counterfactual, path=args.dataset + '_test_counterfactual.pth')
 
     # Generate counterfactual dataset
     else:
