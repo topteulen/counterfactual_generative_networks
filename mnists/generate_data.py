@@ -5,9 +5,13 @@ import torch
 import repackage
 repackage.up()
 
+# new
+from torchvision import transforms
+from torchvision.transforms.functional import InterpolationMode
+
 from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
-from utils import load_cfg
+from utils import load_cfg, transform_to_masks
 
 def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
     x, y = [], []
@@ -20,6 +24,16 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
         # generate initial mask
         y_gen = torch.randint(n_classes, (cgn.batch_size,)).to(device)
         mask, _, _ = cgn(y_gen)
+
+        # generate rotation angle
+        transform = transforms.Compose([
+            transforms.RandomAffine(degrees=180, translate=(0.1, 0.1), scale=None, shear=None, interpolation=InterpolationMode.BILINEAR),
+            transform_to_masks()
+        ])
+
+        with torch.no_grad():
+            for i, m in enumerate(mask):
+                mask[i] = transform(m)
 
         # generate counterfactuals, i.e., same masks, foreground/background vary
         for _ in range(no_cfs):
@@ -65,11 +79,12 @@ if __name__ == "__main__":
     # Generate the dataset
     if not args.weight_path:
         # get dataloader
-        dl_train, dl_test = get_dataloaders(args.dataset, batch_size=1000, workers=8)
+        dl_train, dl_test, dl_counterfactual = get_dataloaders(args.dataset, batch_size=1000, workers=8)
 
         # generate
         generate_dataset(dl=dl_train, path=args.dataset + '_train.pth')
         generate_dataset(dl=dl_test, path=args.dataset + '_test.pth')
+        generate_dataset(dl=dl_counterfactual, path=args.dataset + '_test_counterfactual.pth')
 
     # Generate counterfactual dataset
     else:
