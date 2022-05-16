@@ -8,7 +8,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 
-from mnists.models.classifier import C8SteerableCNN
+from mnists.models.classifier import C8SteerableCNN,SO2SteerableCNN
 from mnists.models.classifier import CNN
 from mnists.dataloader import get_tensor_dataloaders, TENSOR_DATASETS
 
@@ -56,8 +56,11 @@ def test(model, device, test_loader):
 
 def main(args):
     # model and dataloader
+    functions = {"CNN" : CNN , \
+                  "C8SteerableCNN" :  C8SteerableCNN, \
+                  "SO2SteerableCNN" : SO2SteerableCNN}
     #model = CNN()
-    model = C8SteerableCNN()
+    model = functions[args.model]()
     dl_train, dl_test = get_tensor_dataloaders(args.dataset, args.batch_size)
 
     # Optimizer
@@ -87,6 +90,7 @@ if __name__ == '__main__':
                         help='Learning rate step gamma (default: 0.7)')
     parser.add_argument('--log-interval', type=int, default=100, metavar='N',
                         help='how many batches to wait before logging training status')
+    parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","SO2SteerableCNN"])
     args = parser.parse_args()
 
     print(args)
