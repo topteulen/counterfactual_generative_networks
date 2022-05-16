@@ -11,10 +11,6 @@ from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 from utils import transform_to_masks
 
-"""
-NOTE: TODO, to test the neural networks on original data combine 0.02 and 0.025 train and split them into train test.
-"""
-
 
 class ColoredMNIST(Dataset):
     def __init__(self, train=True, counterfactual=False, rotate=0, translate=None, scale=None, shear=None):
@@ -193,7 +189,9 @@ def get_dataloaders(dataset, batch_size, workers):
     ds_train = MNIST(train=True)
     ds_test = MNIST(train=False)
     ds_counterfactual = MNIST(train=False, counterfactual=True, rotate=0, translate=None, scale=None, shear=None)
-
+    """
+    NOTE: TODO add the new counterfactual test data (with rotation, scale and shear)
+    """
 
     dl_train = DataLoader(ds_train, batch_size=batch_size,
                           shuffle=True, num_workers=workers)
