@@ -66,9 +66,9 @@ if __name__ == "__main__":
                         help='Name of the dataset. Make sure the name and the weight_path match')
     parser.add_argument('--weight_path', default='',
                         help='Provide path to .pth of the model')
-    parser.add_argument('--dataset_size', type=float, default=5e4,
+    parser.add_argument('--dataset_size', type=float, default=1e5,
                         help='Size of the dataset. For counterfactual data: the more the better.')
-    parser.add_argument('--no_cfs', type=int, default=1,
+    parser.add_argument('--no_cfs', type=int, default=10,
                         help='How many counterfactuals to sample per datapoint')
     parser.add_argument('--affine_transform', choices=['', 'rot', 'rot_scale', 'rot_scale_shear'],
                         default='',
