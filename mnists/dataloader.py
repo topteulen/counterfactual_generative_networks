@@ -14,6 +14,16 @@ from utils import transform_to_one_color
 import glob
 from collections import OrderedDict
 
+
+TENSOR_DATASETS = ['colored_MNIST',
+                   'double_colored_MNIST',
+                   'wildlife_MNIST']
+TENSOR_DATASETS = [d for dataset in TENSOR_DATASETS for d in [f'{dataset}',
+                                                              f'{dataset}_counterfactual',
+                                                              f'{dataset}_counterfactual_rot',
+                                                              f'{dataset}_counterfactual_rot_scale',
+                                                              f'{dataset}_counterfactual_rot_scale_shear']]
+
 class ColoredMNIST(Dataset):
     def __init__(self, train=True, counterfactual=False, rotate=0, translate=None, scale=None, shear=None):
         # get the colored mnist
@@ -200,14 +210,6 @@ def get_dataloaders(dataset, batch_size, workers):
     dl_test = {name: DataLoader(ds, batch_size=batch_size*2, shuffle=False, num_workers=workers) for name, ds in ds_test.items()}
 
     return dl_train, dl_test
-
-TENSOR_DATASETS = ['colored_MNIST',
-                   'double_colored_MNIST',
-                   'wildlife_MNIST']
-TENSOR_DATASETS = [d for dataset in TENSOR_DATASETS for d in [f'{dataset}_counterfactual',
-                                                              f'{dataset}_counterfactual_rot',
-                                                              f'{dataset}_counterfactual_rot_scale',
-                                                              f'{dataset}_counterfactual_rot_scale_shear']]
 
 def get_tensor_dataloaders(dataset, batch_size=64):
     assert dataset in TENSOR_DATASETS, f"Unknown datasets {dataset}"

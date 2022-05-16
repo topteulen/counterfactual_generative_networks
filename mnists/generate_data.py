@@ -28,7 +28,6 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
         # generate rotation angle
         transform = transforms.Compose([
             transforms.RandomAffine(**kwargs, interpolation=InterpolationMode.BILINEAR),
-            # transforms.RandomAffine(degrees=180, translate=(0.1, 0.1), scale=None, shear=None, interpolation=InterpolationMode.BILINEAR),
             transform_to_masks()
         ])
 
