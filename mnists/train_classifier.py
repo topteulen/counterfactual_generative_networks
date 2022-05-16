@@ -36,7 +36,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
         loss, correct, len(train_loader.dataset),
         100. * correct / len(train_loader.dataset)))
 
-def test(model, device, test_loader):
+def test(model, device, test_loader, name=""):
     model.eval()
     test_loss = 0
     correct = 0
@@ -50,14 +50,12 @@ def test(model, device, test_loader):
 
     test_loss /= len(test_loader.dataset)
 
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.3f}%)\n'.format(
-        test_loss, correct, len(test_loader.dataset),
-        100. * correct / len(test_loader.dataset)))
+    print(f'\nTest set {name}: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.3f}%)')
 
 def main(args):
     # model and dataloader
-    #model = CNN()
-    model = C8SteerableCNN()
+    model = CNN()
+    # model = C8SteerableCNN()
     dl_train, dl_test = get_tensor_dataloaders(args.dataset, args.batch_size)
 
     # Optimizer
@@ -70,7 +68,8 @@ def main(args):
 
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, dl_train, optimizer, epoch)
-        test(model, device, dl_test)
+        for name, dl in dl_test.items():
+            test(model, device, dl, name)
         scheduler.step()
 
 if __name__ == '__main__':

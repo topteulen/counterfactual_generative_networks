@@ -9,13 +9,15 @@ from torch import tensor
 from torchvision import transforms
 from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader, TensorDataset
-from utils import transform_to_masks
+from utils import transform_to_one_color
 
+import glob
+from collections import OrderedDict
 
 class ColoredMNIST(Dataset):
     def __init__(self, train=True, counterfactual=False, rotate=0, translate=None, scale=None, shear=None):
         # get the colored mnist
-        self.data_path = 'mnists/data/colored_mnist/mnist_10color_double_testsets_jitter_var_0.02+0.025.npy'
+        self.data_path = 'mnists/data/colored_mnist/mnist_10color_double_testsets_jitter_var_0.02_0.025.npy'
         data_dic = np.load(self.data_path, encoding='latin1', allow_pickle=True).item()
 
         transform = [
@@ -26,7 +28,7 @@ class ColoredMNIST(Dataset):
                 (0.5, 0.5, 0.5),
                 (0.5, 0.5, 0.5),
             ),
-        ])
+        ]
 
         if train:
             self.ims = data_dic['train_image']
@@ -39,7 +41,7 @@ class ColoredMNIST(Dataset):
             self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
             transform += [
                 transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear),
-                transform_to_masks(),
+                transform_to_one_color(),
             ]
 
         self.transform = transforms.Compose(transform)
@@ -187,24 +189,25 @@ def get_dataloaders(dataset, batch_size, workers):
         raise TypeError(f"Unknown dataset: {dataset}")
 
     ds_train = MNIST(train=True)
-    ds_test = MNIST(train=False)
-    ds_counterfactual = MNIST(train=False, counterfactual=True, rotate=0, translate=None, scale=None, shear=None)
-    """
-    NOTE: TODO add the new counterfactual test data (with rotation, scale and shear)
-    """
+    ds_test = {"test" :                               MNIST(train=False, counterfactual=False),
+               "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=0,   translate=None,       scale=None,       shear=None),
+               "test_counterfactual_rot":             MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=None,       shear=None),
+               "test_counterfactual_rot_scale":       MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=(0.5, 1.5), shear=None),
+               "test_counterfactual_rot_scale_shear": MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=(0.5, 1.5), shear=30)}
 
     dl_train = DataLoader(ds_train, batch_size=batch_size,
                           shuffle=True, num_workers=workers)
-    dl_test = DataLoader(ds_test, batch_size=batch_size*2,
-                         shuffle=False, num_workers=workers)
-    dl_counterfactual = DataLoader(ds_counterfactual, batch_size=batch_size*2,
-                         shuffle=False, num_workers=workers)
+    dl_test = {name: DataLoader(ds, batch_size=batch_size*2, shuffle=False, num_workers=workers) for name, ds in ds_test.items()}
 
-    return dl_train, dl_test, dl_counterfactual
+    return dl_train, dl_test
 
-TENSOR_DATASETS = ['colored_MNIST', 'colored_MNIST_counterfactual',
-                   'double_colored_MNIST', 'double_colored_MNIST_counterfactual',
-                   'wildlife_MNIST', 'wildlife_MNIST_counterfactual']
+TENSOR_DATASETS = ['colored_MNIST',
+                   'double_colored_MNIST',
+                   'wildlife_MNIST']
+TENSOR_DATASETS = [d for dataset in TENSOR_DATASETS for d in [f'{dataset}_counterfactual',
+                                                              f'{dataset}_counterfactual_rot',
+                                                              f'{dataset}_counterfactual_rot_scale',
+                                                              f'{dataset}_counterfactual_rot_scale_shear']]
 
 def get_tensor_dataloaders(dataset, batch_size=64):
     assert dataset in TENSOR_DATASETS, f"Unknown datasets {dataset}"
@@ -212,14 +215,19 @@ def get_tensor_dataloaders(dataset, batch_size=64):
     if 'counterfactual' in dataset:
         tensor = torch.load(f'mnists/data/{dataset}.pth')
         ds_train = TensorDataset(*tensor[:2])
-        dataset = dataset.replace('_counterfactual', '')
+        dataset = dataset.replace(dataset.split('MNIST')[1], '')
     else:
         ds_train = TensorDataset(*torch.load(f'mnists/data/{dataset}_train.pth'))
-    ds_test = TensorDataset(*torch.load(f'mnists/data/{dataset}_test.pth'))
+
+    # load test data
+    ds_test = {}
+    for name in glob.glob(f'mnists/data/{dataset}_test*.pth'):
+        key = name.split("colored_MNIST_")[1].split(".")[0]
+        ds_test[key] = TensorDataset(*torch.load(name))
 
     dl_train = DataLoader(ds_train, batch_size=batch_size, num_workers=4,
                           shuffle=True, pin_memory=True)
-    dl_test = DataLoader(ds_test, batch_size=batch_size*10, num_workers=4,
-                         shuffle=False, pin_memory=True)
+    dl_test = {name: DataLoader(ds, batch_size=batch_size*10, num_workers=4, shuffle=False, pin_memory=True) for name, ds in ds_test.items()}
+    dl_test = OrderedDict(sorted(dl_test.items()))
 
     return dl_train, dl_test

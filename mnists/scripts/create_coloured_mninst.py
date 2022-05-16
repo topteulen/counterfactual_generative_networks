@@ -42,4 +42,4 @@ if __name__ == '__main__':
                  'counterfactual_image' : counterfactual_data,
                  'counterfactual_label' : counterfactual_labels}
 
-    np.save('/'.join(data_path.split('/')[:-1] + ['mnist_10color_double_testsets_jitter_var_0.02+0.025.npy']), data_dict, allow_pickle=True)
+    np.save('/'.join(data_path.split('/')[:-1] + ['mnist_10color_double_testsets_jitter_var_0.02_0.025.npy']), data_dict, allow_pickle=True)

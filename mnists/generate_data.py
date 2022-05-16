@@ -13,7 +13,7 @@ from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
 from utils import load_cfg, transform_to_masks
 
-def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
+def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
     x, y = [], []
     cgn.batch_size = 100
     n_classes = 10
@@ -27,7 +27,8 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device):
 
         # generate rotation angle
         transform = transforms.Compose([
-            transforms.RandomAffine(degrees=180, translate=(0.1, 0.1), scale=None, shear=None, interpolation=InterpolationMode.BILINEAR),
+            transforms.RandomAffine(**kwargs, interpolation=InterpolationMode.BILINEAR),
+            # transforms.RandomAffine(degrees=180, translate=(0.1, 0.1), scale=None, shear=None, interpolation=InterpolationMode.BILINEAR),
             transform_to_masks()
         ])
 
@@ -70,6 +71,9 @@ if __name__ == "__main__":
                         help='Size of the dataset. For counterfactual data: the more the better.')
     parser.add_argument('--no_cfs', type=int, default=1,
                         help='How many counterfactuals to sample per datapoint')
+    parser.add_argument('--affine_transform', choices=['', 'rot', 'rot_scale', 'rot_scale_shear'],
+                        default='',
+                        help='Provide a Affine transform that is applied to the mask')
     args = parser.parse_args()
     print(args)
 
@@ -79,12 +83,12 @@ if __name__ == "__main__":
     # Generate the dataset
     if not args.weight_path:
         # get dataloader
-        dl_train, dl_test, dl_counterfactual = get_dataloaders(args.dataset, batch_size=1000, workers=8)
+        dl_train, dl_test = get_dataloaders(args.dataset, batch_size=1000, workers=8)
 
         # generate
-        generate_dataset(dl=dl_train, path=args.dataset + '_train.pth')
-        generate_dataset(dl=dl_test, path=args.dataset + '_test.pth')
-        generate_dataset(dl=dl_counterfactual, path=args.dataset + '_test_counterfactual.pth')
+        generate_dataset(dl=dl_train, path=f'{args.dataset}_train.pth')
+        for name, dl in dl_test.items():
+            generate_dataset(dl=dl, path=f'{args.dataset}_{name}.pth')
 
     # Generate counterfactual dataset
     else:
@@ -94,8 +98,15 @@ if __name__ == "__main__":
         cgn.load_state_dict(torch.load(args.weight_path, 'cpu'))
         cgn.to(device).eval()
 
+        affine_choices = {
+            ''                : {'degrees':0},
+            'rot'             : {'degrees':180, 'translate':(0.1, 0.1)},
+            'rot_scale'       : {'degrees':180, 'translate':(0.1, 0.1), 'scale':(0.5, 1.5)},
+            'rot_scale_shear' : {'degrees':180, 'translate':(0.1, 0.1), 'scale':(0.5, 1.5), 'shear':30},
+        }
+
         # generate
         print(f"Generating the counterfactual {args.dataset} of size {args.dataset_size}")
-        generate_cf_dataset(cgn=cgn, path=args.dataset + '_counterfactual.pth',
+        generate_cf_dataset(cgn=cgn, path=f'{args.dataset}_counterfactual{"_" if args.affine_transform else ""}{args.affine_transform}.pth',
                             dataset_size=args.dataset_size, no_cfs=args.no_cfs,
-                            device=device)
+                            device=device, **affine_choices[args.affine_transform])
