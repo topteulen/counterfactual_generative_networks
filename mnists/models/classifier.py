@@ -139,6 +139,7 @@ class C8SteerableCNN(torch.nn.Module):
             torch.nn.BatchNorm1d(64),
             torch.nn.ELU(inplace=True),
             torch.nn.Linear(64, n_classes),
+            torch.nn.LogSoftmax(dim=1)
         )
     
     def forward(self, input: torch.Tensor):
@@ -283,6 +284,7 @@ class SO2SteerableCNN(torch.nn.Module):
             torch.nn.BatchNorm1d(c),
             torch.nn.ELU(inplace=True),
             torch.nn.Linear(c, n_classes),
+            torch.nn.LogSoftmax(dim=1)
         )
 
     def forward(self, input: torch.Tensor):

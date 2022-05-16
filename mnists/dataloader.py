@@ -51,7 +51,7 @@ class ColoredMNIST(Dataset):
             self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
             transform += [
                 transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear),
-                transform_to_one_color(),
+                # transform_to_one_color(),
             ]
 
         self.transform = transforms.Compose(transform)
