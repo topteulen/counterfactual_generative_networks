@@ -9,10 +9,10 @@ from torch import tensor
 from torchvision import transforms
 from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader, TensorDataset
-from utils import transform_to_one_color
 
 import glob
 from collections import OrderedDict
+from torchvision.transforms.functional import InterpolationMode
 
 
 TENSOR_DATASETS = ['colored_MNIST',
@@ -32,7 +32,8 @@ class ColoredMNIST(Dataset):
 
         transform = [
             transforms.ToPILImage(),
-            transforms.Resize((32, 32), Image.NEAREST),
+            transforms.GaussianBlur(3, sigma=0.4),
+            transforms.Resize((32, 32)),
             transforms.ToTensor(),
             transforms.Normalize(
                 (0.5, 0.5, 0.5),
@@ -50,8 +51,9 @@ class ColoredMNIST(Dataset):
             self.ims = data_dic['counterfactual_image']
             self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
             transform += [
-                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear),
-                transform_to_one_color(),
+                transforms.Pad(14, fill=-1, padding_mode='constant'),
+                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
+                transforms.CenterCrop(32),
             ]
 
         self.transform = transforms.Compose(transform)
@@ -200,10 +202,10 @@ def get_dataloaders(dataset, batch_size, workers):
 
     ds_train = MNIST(train=True)
     ds_test = {"test" :                               MNIST(train=False, counterfactual=False),
-               "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=0,   translate=None,       scale=None,       shear=None),
-               "test_counterfactual_rot":             MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=None,       shear=None),
-               "test_counterfactual_rot_scale":       MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=(0.5, 1.5), shear=None),
-               "test_counterfactual_rot_scale_shear": MNIST(train=False, counterfactual=True, rotate=180, translate=(0.1, 0.1), scale=(0.5, 1.5), shear=30)}
+               # "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=0,   translate=None,       scale=None,       shear=None),
+               "test_counterfactual_rot":             MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=None,       shear=None),
+               "test_counterfactual_rot_scale":       MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=None),
+               "test_counterfactual_rot_scale_shear": MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=30)}
 
     dl_train = DataLoader(ds_train, batch_size=batch_size,
                           shuffle=True, num_workers=workers)

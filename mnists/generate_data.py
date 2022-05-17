@@ -11,7 +11,7 @@ from torchvision.transforms.functional import InterpolationMode
 
 from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
-from utils import load_cfg, transform_to_masks
+from utils import load_cfg
 
 def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
     x, y = [], []
@@ -28,7 +28,6 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
         # generate rotation angle
         transform = transforms.Compose([
             transforms.RandomAffine(**kwargs, interpolation=InterpolationMode.BILINEAR),
-            transform_to_masks()
         ])
 
         with torch.no_grad():
