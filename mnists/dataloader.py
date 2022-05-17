@@ -50,7 +50,6 @@ class ColoredMNIST(Dataset):
         else:
             self.ims = data_dic['counterfactual_image']
             self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
-            if
             transform += [
                 transforms.Pad(14, fill=-1, padding_mode='constant'),
                 transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
