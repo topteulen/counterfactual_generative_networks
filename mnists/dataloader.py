@@ -59,7 +59,6 @@ class ColoredMNIST(Dataset):
 
         self.transform = transforms.Compose(transform)
 
-
     def __getitem__(self, idx):
         ims, labels = self.transform(self.ims[idx]), self.labels[idx]
 
@@ -203,7 +202,7 @@ def get_dataloaders(dataset, batch_size, workers):
 
     ds_train = MNIST(train=True)
     ds_test = {"test" :                               MNIST(train=False, counterfactual=False),
-               "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=None,   translate=None,         scale=None,       shear=None),
+               "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=None,translate=None,         scale=None,       shear=None),
                "test_counterfactual_rot":             MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=None,       shear=None),
                "test_counterfactual_rot_scale":       MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=None),
                "test_counterfactual_rot_scale_shear": MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=30)}
