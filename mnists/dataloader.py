@@ -115,9 +115,7 @@ class DoubleColoredMNIST(Dataset):
 
         # make digit into a soft mask and color each mask.
         ims_digit = ims_digit / 255
-        self.ims = ims_digit * (obj_colors) + (1 - ims_digit) * back_colors
-        print(self.ims.type())
-        exit()
+        self.ims = ims_digit * (obj_colors) + (1 - ims_digit) * back_colorss
 
         transform = [
             transforms.Resize((32, 32)),
