@@ -1,0 +1,34 @@
+TRAINING ON NON-COUNTERFACTUAL DATA
+
+Train set: Average loss: 0.0000, Accuracy: 50000/50000 (100.0%)
+
+
+Test set test: Average loss: 37.1974, Accuracy: 951/10000 (9.510%)
+
+Test set test_counterfactual: Average loss: 37.3329, Accuracy: 978/10000 (9.780%)
+
+Test set test_counterfactual_rot: Average loss: 33.9597, Accuracy: 995/10000 (9.950%)
+
+Test set test_counterfactual_rot_scale: Average loss: 31.1295, Accuracy: 995/10000 (9.950%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 30.9769, Accuracy: 994/10000 (9.940%)
+
+
+
+TRAINING ON COUNTERFACTUAL DATA (NOT TRANSFORMED)
+
+
+
+
+
+TRAINING ON COUNTERFACTUAL DATA WITH ROTATION
+
+
+
+TRAINING ON COUNTERFACTUAL DATA WITH ROTATION AND SCALE
+
+
+
+
+
+TRAINING ON COUNTERFACTUAL DATA WITH ROTATION, SCALE AND SHEAR

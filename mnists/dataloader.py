@@ -143,7 +143,7 @@ class DoubleColoredMNIST(Dataset):
         return self.labels.shape[0]
 
 class WildlifeMNIST(Dataset):
-    def __init__(self, train=True):
+    def __init__(self, train=True, counterfactual=False, rotate=0, translate=None, scale=None, shear=None):
         self.train = train
         self.mnist_sz = 32
         inter_sz = 150
@@ -155,42 +155,61 @@ class WildlifeMNIST(Dataset):
         else:
             ims, labels = mnist.data[50000:], mnist.targets[50000:]
 
-        self.ims_digit = torch.stack([ims, ims, ims], dim=1)
+        ims_digit = torch.stack([ims, ims, ims], dim=1)
         self.labels = labels
 
         # texture paths
         background_dir = Path('.') / 'mnists' / 'data' / 'textures' / 'background'
-        self.background_textures = sorted([im for im in background_dir.glob('*.jpg')])
+        background_textures = sorted([im for im in background_dir.glob('*.jpg')])
         object_dir = Path('.') / 'mnists' / 'data' / 'textures' / 'object'
-        self.object_textures = sorted([im for im in object_dir.glob('*.jpg')])
+        object_textures = sorted([im for im in object_dir.glob('*.jpg')])
 
-        self.T_texture = transforms.Compose([
-            transforms.Resize((inter_sz, inter_sz), Image.NEAREST),
-            transforms.RandomCrop(self.mnist_sz, padding=3, padding_mode='reflect'),
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transform_texture = transforms.Compose([
+            transforms.Resize((inter_sz, inter_sz)),
+            transforms.RandomCrop(self.mnist_sz),
         ])
 
+        transform_digit =  transforms.Compose([
+            transforms.Resize((self.mnist_sz, self.mnist_sz)),
+        ])
+
+        def open_image_plus_transform(f):
+            with Image.open(f) as im:
+                return np.moveaxis(np.array(transform_texture(im)), 2, 0).astype(float)
+
+        background_textures = np.array(list(map(open_image_plus_transform, background_textures)))
+        object_textures = np.array(list(map(open_image_plus_transform, object_textures)))
+
+        # set the labels for each image (test gets counterfactual labels)
+        if train:
+            labels = np.array(self.labels)
+        else:
+            labels = np.random.randint(10, size=(self.labels.shape[0]))
+        # create all the colors for each image depending on the label
+        background_textures = torch.tensor(background_textures[labels])
+        object_textures = torch.tensor(object_textures[labels])
+
+        # make digit into a soft mask and color each mask.
+        ims_digit = transform_digit(ims_digit / 255)
+        self.ims = ims_digit * object_textures + (1 - ims_digit) * background_textures
+
+        transform = [
+            transforms.Normalize((0.5, 0.5, 0.5),
+                                 (0.5, 0.5, 0.5)),
+        ]
+
+        if (rotate is not None):
+            transform += [
+                transforms.Pad(14, fill=-1, padding_mode='constant'),
+                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
+                transforms.CenterCrop(self.mnist_sz),
+            ]
+
+        self.transform = transforms.Compose(transform)
+
     def __getitem__(self, idx):
-        # get textures
-        i = self.labels[idx] if self.train else np.random.randint(10)
-        back_text = Image.open(self.background_textures[i])
-        back_text = self.T_texture(back_text)
-
-        i = self.labels[idx] if self.train else np.random.randint(10)
-        obj_text = Image.open(self.object_textures[i])
-        obj_text = self.T_texture(obj_text)
-
-        # get digit
-        im_digit = (self.ims_digit[idx]/255.).to(torch.float32)
-        im_digit = F.interpolate(im_digit[None, :], (self.mnist_sz, self.mnist_sz)).squeeze()
-        im_digit = (im_digit > 0.1).to(int)  # binarize
-
-        # plot digit onto the texture
-        ims = im_digit*(obj_text) + (1 - im_digit)*back_text
-
         ret = {
-            'ims': ims,
+            'ims': self.transform(self.ims[idx]),
             'labels': self.labels[idx],
         }
         return ret
