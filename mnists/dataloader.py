@@ -116,6 +116,8 @@ class DoubleColoredMNIST(Dataset):
         # make digit into a soft mask and color each mask.
         ims_digit = ims_digit / 255
         self.ims = ims_digit * (obj_colors) + (1 - ims_digit) * back_colors
+        print(self.ims.type())
+        exit()
 
         transform = [
             transforms.Resize((32, 32)),
@@ -175,7 +177,7 @@ class WildlifeMNIST(Dataset):
 
         def open_image_plus_transform(f):
             with Image.open(f) as im:
-                return np.moveaxis(np.array(transform_texture(im)), 2, 0).astype(float)
+                return np.moveaxis(np.array(transform_texture(im)), 2, 0)
 
         background_textures = np.array(list(map(open_image_plus_transform, background_textures)))
         object_textures = np.array(list(map(open_image_plus_transform, object_textures)))
@@ -253,7 +255,7 @@ def get_tensor_dataloaders(dataset, batch_size=64):
     # load test data
     ds_test = {}
     for name in glob.glob(f'mnists/data/{dataset}_test*.pth'):
-        key = name.split("colored_MNIST_")[1].split(".")[0]
+        key = name.split("MNIST_")[1].split(".")[0]
         ds_test[key] = TensorDataset(*torch.load(name))
 
     dl_train = DataLoader(ds_train, batch_size=batch_size, num_workers=4,
