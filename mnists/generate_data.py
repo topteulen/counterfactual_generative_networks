@@ -12,6 +12,7 @@ from torchvision.transforms.functional import InterpolationMode
 from mnists.train_cgn import CGN
 from mnists.dataloader import get_dataloaders
 from utils import load_cfg
+import os
 
 def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
     x, y = [], []
@@ -81,8 +82,7 @@ if __name__ == "__main__":
     # Generate the dataset
     if not args.weight_path:
         # get dataloader
-        dl_train, dl_test = get_dataloaders(args.dataset, batch_size=1000, workers=8)
-
+        dl_train, dl_test = get_dataloaders(args.dataset, batch_size=1000, workers= 0 if os.name == "nt" else 12)
         # generate
         generate_dataset(dl=dl_train, path=f'{args.dataset}_train.pth')
         for name, dl in dl_test.items():

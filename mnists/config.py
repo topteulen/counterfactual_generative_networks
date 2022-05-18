@@ -1,4 +1,5 @@
 from yacs.config import CfgNode as CN
+import os
 
 __C = CN()
 
@@ -26,7 +27,7 @@ __C.MODEL.INIT_GAIN = 0.5
 __C.TRAIN = CN()
 __C.TRAIN.DATASET = 'colored_MNIST'
 __C.TRAIN.BATCH_SIZE = 64
-__C.TRAIN.WORKERS = 12
+__C.TRAIN.WORKERS = 0 if os.name == "nt" else 12
 __C.TRAIN.COLOR_VAR = 0.02
 __C.TRAIN.EPOCHS = 5
 

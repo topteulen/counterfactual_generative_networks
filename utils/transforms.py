@@ -1,7 +1,6 @@
 import torch
 import matplotlib.pyplot as plt
 
-
 class transform_to_masks():
     def __init__(self, threshold=0.2):
         self.threshold = threshold
