@@ -51,8 +51,32 @@ Test set test_counterfactual_rot_scale_shear: Average loss: 12.9133, Accuracy: 3
 
 TRAINING ON COUNTERFACTUAL DATA WITH ROTATION AND SCALE
 
+Train set: Average loss: 0.4195, Accuracy: 87144/100000 (87.1%)
 
+
+Test set test: Average loss: 1.2483, Accuracy: 7806/10000 (78.060%)
+
+Test set test_counterfactual: Average loss: 1.2470, Accuracy: 7829/10000 (78.290%)
+
+Test set test_counterfactual_rot: Average loss: 5.5222, Accuracy: 4547/10000 (45.470%)
+
+Test set test_counterfactual_rot_scale: Average loss: 7.1968, Accuracy: 4382/10000 (43.820%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 7.3435, Accuracy: 4078/10000 (40.780%)
 
 
 
 TRAINING ON COUNTERFACTUAL DATA WITH ROTATION, SCALE AND SHEAR
+
+Train set: Average loss: 0.3233, Accuracy: 87663/100000 (87.7%)
+
+
+Test set test: Average loss: 1.2027, Accuracy: 7802/10000 (78.020%)
+
+Test set test_counterfactual: Average loss: 1.2152, Accuracy: 7797/10000 (77.970%)
+
+Test set test_counterfactual_rot: Average loss: 5.3406, Accuracy: 4666/10000 (46.660%)
+
+Test set test_counterfactual_rot_scale: Average loss: 7.7844, Accuracy: 4433/10000 (44.330%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 8.0629, Accuracy: 4218/10000 (42.180%)
