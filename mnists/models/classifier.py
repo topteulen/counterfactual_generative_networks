@@ -198,7 +198,7 @@ class SO2SteerableCNN(torch.nn.Module):
         # we store the input type for wrapping the images into a geometric tensor during the forward pass
         self.input_type = in_type
         # We need to mask the input image since the corners are moved outside the grid under rotations
-        self.mask = nn.MaskModule(in_type, 29, margin=1)
+        self.mask = nn.MaskModule(in_type, 32, margin=1)
         # convolution 1
         # first we build the non-linear layer, which also constructs the right feature type
         # we choose 8 feature fields, each transforming under the regular representation of SO(2) up to frequency 3
