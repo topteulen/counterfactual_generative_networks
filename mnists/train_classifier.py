@@ -66,7 +66,8 @@ def main(args):
     functions = {"CNN" : CNN , \
                   "C8SteerableCNN" :  C8SteerableCNN, \
                   "SO2SteerableCNN" : SO2SteerableCNN, \
-                  "SES" : MNIST_SES_Scalar}
+                  "SES" : MNIST_SES_Scalar, \
+                  "SES_V" : MNIST_SES_V}
     #model = CNN()
     model = functions[args.model]()
     dl_train, dl_test = get_tensor_dataloaders(args.dataset, args.batch_size)
@@ -112,7 +113,7 @@ if __name__ == '__main__':
                         help='Learning rate step gamma (default: 0.7)')
     parser.add_argument('--log-interval', type=int, default=100, metavar='N',
                         help='how many batches to wait before logging training status')
-    parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","SO2SteerableCNN","SES"])
+    parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","SO2SteerableCNN","SES","SES_V"])
     args = parser.parse_args()
 
     print(args)
