@@ -89,7 +89,8 @@ class MNIST_SES_V(nn.Module):
             nn.BatchNorm1d(256),
             nn.ReLU(True),
             nn.Dropout(dropout),
-            nn.Linear(256, 10)
+            nn.Linear(256, 10),
+            nn.LogSoftmax(dim=1)
         )
 
     def forward(self, x):

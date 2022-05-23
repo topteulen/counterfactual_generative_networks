@@ -10,8 +10,10 @@ from torch.optim.lr_scheduler import StepLR
 
 from mnists.models.classifier import C8SteerableCNN,SO2SteerableCNN
 from mnists.models.classifier import CNN
-from mnists.models.mnist_ses import MNIST_SES_Scalar
+from mnists.models.mnist_ses import MNIST_SES_Scalar, MNIST_SES_V
 from mnists.dataloader import get_tensor_dataloaders, TENSOR_DATASETS
+
+import numpy as np
 
 import json
 
@@ -65,11 +67,21 @@ def main(args):
     # model and dataloader
     functions = {"CNN" : CNN , \
                   "C8SteerableCNN" :  C8SteerableCNN, \
+                  "C8SteerableCNNSmall" :  C8SteerableCNN, \
                   "SO2SteerableCNN" : SO2SteerableCNN, \
                   "SES" : MNIST_SES_Scalar, \
                   "SES_V" : MNIST_SES_V}
     #model = CNN()
-    model = functions[args.model]()
+    if "Small" in args.model:
+        model = functions[args.model](small=True)
+    else:
+        model = functions[args.model]()
+
+    model_parameters = filter(lambda p: p.requires_grad, model.parameters())
+    params = sum([np.prod(p.size()) for p in model_parameters])
+
+    print(f"\nNumber of trainable parameters: {params}\n")
+    
     dl_train, dl_test = get_tensor_dataloaders(args.dataset, args.batch_size)
 
     # Optimizer
@@ -93,8 +105,9 @@ def main(args):
     results_dict['train_len'] = train_len
     results_dict['test_len'] = test_len
     results_dict['dataset'] = args.dataset
+    results_dict['num_params'] = float(params)
 
-    with open(f'mnists/results/{args.dataset}_{args.model}.json', 'w') as f:
+    with open(f'mnists/results/{args.model}_{args.dataset}.json', 'w') as f:
         json.dump(results_dict, f)
     f.close()
 
@@ -113,7 +126,7 @@ if __name__ == '__main__':
                         help='Learning rate step gamma (default: 0.7)')
     parser.add_argument('--log-interval', type=int, default=100, metavar='N',
                         help='how many batches to wait before logging training status')
-    parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","SO2SteerableCNN","SES","SES_V"])
+    parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","C8SteerableCNNSmall", "SO2SteerableCNN","SES","SES_V"])
     args = parser.parse_args()
 
     print(args)
