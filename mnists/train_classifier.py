@@ -13,6 +13,8 @@ from mnists.models.classifier import CNN
 from mnists.models.mnist_ses import MNIST_SES_Scalar
 from mnists.dataloader import get_tensor_dataloaders, TENSOR_DATASETS
 
+import json
+
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
     correct = 0
@@ -37,6 +39,8 @@ def train(args, model, device, train_loader, optimizer, epoch):
         loss, correct, len(train_loader.dataset),
         100. * correct / len(train_loader.dataset)))
 
+    return loss.detach().cpu().item(), correct, len(train_loader.dataset)
+
 def test(model, device, test_loader, name=""):
     model.eval()
     test_loss = 0
@@ -51,7 +55,11 @@ def test(model, device, test_loader, name=""):
 
     test_loss /= len(test_loader.dataset)
 
+    
+
     print(f'\nTest set {name}: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.3f}%)')
+
+    return test_loss, correct, len(test_loader.dataset)
 
 def main(args):
     # model and dataloader
@@ -71,11 +79,24 @@ def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
 
+    results_dict = {'results': {name: [] for name, _ in dl_test.items()}}
+    results_dict['results']['train'] = []
     for epoch in range(1, args.epochs + 1):
-        train(args, model, device, dl_train, optimizer, epoch)
+        train_loss, train_correct, train_len = train(args, model, device, dl_train, optimizer, epoch)
+        results_dict['results']['train'].append({'loss': train_loss, 'accuracy': 100 * train_correct/train_len})
         for name, dl in dl_test.items():
-            test(model, device, dl, name)
+            test_loss, test_correct, test_len = test(model, device, dl, name)
+            results_dict['results'][name].append({'loss': test_loss, 'accuracy': 100 * test_correct/test_len})
         scheduler.step()
+
+    results_dict['train_len'] = train_len
+    results_dict['test_len'] = test_len
+    results_dict['dataset'] = args.dataset
+
+    with open(f'mnists/results/{args.dataset}_{args.model}.json', 'w') as f:
+        json.dump(results_dict, f)
+    f.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
