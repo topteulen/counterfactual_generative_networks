@@ -61,7 +61,7 @@ class MNIST_SES_V(nn.Module):
         super().__init__()
         C1, C2, C3 = 32, 63, 95
         self.main = nn.Sequential(
-            SESConv_Z2_H(1, C1, kernel_size, 7, scales=scales,
+            SESConv_Z2_H(3, C1, kernel_size, 7, scales=scales,
                          padding=kernel_size // 2, bias=True,
                          basis_type=basis_type, **kwargs),
             nn.ReLU(True),
@@ -85,7 +85,7 @@ class MNIST_SES_V(nn.Module):
         )
 
         self.linear = nn.Sequential(
-            nn.Linear(4 * C3, 256, bias=False),
+            nn.Linear(9 * C3, 256, bias=False),
             nn.BatchNorm1d(256),
             nn.ReLU(True),
             nn.Dropout(dropout),
