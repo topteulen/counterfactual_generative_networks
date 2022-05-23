@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 models = ["CNN","C8SteerableCNN","C8SteerableCNNSmall", "SO2SteerableCNN","SES","SES_V"]
 
@@ -10,4 +11,10 @@ additions = ['', '_counterfactual', '_counterfactual_rot', '_counterfactual_rot_
 for model in models:
     for dataset in datasets:
         for addition in additions:
-            os.system(f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model}')
+            cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model}'
+            print(f"\nRunning:\n {cmd}\n")
+            result = subprocess.check_output(cmd, shell=True, text=True)
+            with open(f'mnists/results/{model}_{dataset}{addition}_shell.txt', 'w') as f:
+                f.write(result)
+            f.close()
+            print(result)
