@@ -1,0 +1,294 @@
+Namespace(dataset='double_colored_MNIST_counterfactual_rot', batch_size=64, epochs=10, lr=1.0, gamma=0.7, log_interval=100, model='CNN')
+
+Number of trainable parameters: 67760
+
+Train Epoch: 1 [0/100000 (0%)]	Loss: 2.307235
+Train Epoch: 1 [6400/100000 (6%)]	Loss: 2.296069
+Train Epoch: 1 [12800/100000 (13%)]	Loss: 2.294234
+Train Epoch: 1 [19200/100000 (19%)]	Loss: 2.283705
+Train Epoch: 1 [25600/100000 (26%)]	Loss: 2.281414
+Train Epoch: 1 [32000/100000 (32%)]	Loss: 2.271262
+Train Epoch: 1 [38400/100000 (38%)]	Loss: 2.052706
+Train Epoch: 1 [44800/100000 (45%)]	Loss: 1.854201
+Train Epoch: 1 [51200/100000 (51%)]	Loss: 1.984670
+Train Epoch: 1 [57600/100000 (58%)]	Loss: 2.117050
+Train Epoch: 1 [64000/100000 (64%)]	Loss: 1.871411
+Train Epoch: 1 [70400/100000 (70%)]	Loss: 1.943888
+Train Epoch: 1 [76800/100000 (77%)]	Loss: 1.929383
+Train Epoch: 1 [83200/100000 (83%)]	Loss: 1.793528
+Train Epoch: 1 [89600/100000 (90%)]	Loss: 1.657140
+Train Epoch: 1 [96000/100000 (96%)]	Loss: 1.508163
+
+Train set: Average loss: 1.6134, Accuracy: 24013/100000 (24.0%)
+
+
+Test set test: Average loss: 1.9833, Accuracy: 3058/10000 (30.580%)
+
+Test set test_counterfactual: Average loss: 1.9813, Accuracy: 3071/10000 (30.710%)
+
+Test set test_counterfactual_rot: Average loss: 2.9783, Accuracy: 2600/10000 (26.000%)
+
+Test set test_counterfactual_rot_scale: Average loss: 3.6907, Accuracy: 2025/10000 (20.250%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 3.7604, Accuracy: 1992/10000 (19.920%)
+Train Epoch: 2 [0/100000 (0%)]	Loss: 1.718844
+Train Epoch: 2 [6400/100000 (6%)]	Loss: 1.470637
+Train Epoch: 2 [12800/100000 (13%)]	Loss: 1.502557
+Train Epoch: 2 [19200/100000 (19%)]	Loss: 1.536151
+Train Epoch: 2 [25600/100000 (26%)]	Loss: 1.357741
+Train Epoch: 2 [32000/100000 (32%)]	Loss: 1.259606
+Train Epoch: 2 [38400/100000 (38%)]	Loss: 1.297217
+Train Epoch: 2 [44800/100000 (45%)]	Loss: 1.352505
+Train Epoch: 2 [51200/100000 (51%)]	Loss: 1.345582
+Train Epoch: 2 [57600/100000 (58%)]	Loss: 1.314472
+Train Epoch: 2 [64000/100000 (64%)]	Loss: 1.039730
+Train Epoch: 2 [70400/100000 (70%)]	Loss: 1.129891
+Train Epoch: 2 [76800/100000 (77%)]	Loss: 1.085921
+Train Epoch: 2 [83200/100000 (83%)]	Loss: 0.963053
+Train Epoch: 2 [89600/100000 (90%)]	Loss: 0.848940
+Train Epoch: 2 [96000/100000 (96%)]	Loss: 0.786223
+
+Train set: Average loss: 1.1097, Accuracy: 52854/100000 (52.9%)
+
+
+Test set test: Average loss: 1.3307, Accuracy: 5766/10000 (57.660%)
+
+Test set test_counterfactual: Average loss: 1.3298, Accuracy: 5716/10000 (57.160%)
+
+Test set test_counterfactual_rot: Average loss: 3.4616, Accuracy: 3670/10000 (36.700%)
+
+Test set test_counterfactual_rot_scale: Average loss: 4.1440, Accuracy: 3250/10000 (32.500%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 4.0589, Accuracy: 3121/10000 (31.210%)
+Train Epoch: 3 [0/100000 (0%)]	Loss: 0.964495
+Train Epoch: 3 [6400/100000 (6%)]	Loss: 0.883018
+Train Epoch: 3 [12800/100000 (13%)]	Loss: 0.964933
+Train Epoch: 3 [19200/100000 (19%)]	Loss: 0.852792
+Train Epoch: 3 [25600/100000 (26%)]	Loss: 0.827698
+Train Epoch: 3 [32000/100000 (32%)]	Loss: 0.755325
+Train Epoch: 3 [38400/100000 (38%)]	Loss: 0.913501
+Train Epoch: 3 [44800/100000 (45%)]	Loss: 1.003660
+Train Epoch: 3 [51200/100000 (51%)]	Loss: 0.879679
+Train Epoch: 3 [57600/100000 (58%)]	Loss: 0.640155
+Train Epoch: 3 [64000/100000 (64%)]	Loss: 0.815706
+Train Epoch: 3 [70400/100000 (70%)]	Loss: 0.619751
+Train Epoch: 3 [76800/100000 (77%)]	Loss: 0.718471
+Train Epoch: 3 [83200/100000 (83%)]	Loss: 0.727528
+Train Epoch: 3 [89600/100000 (90%)]	Loss: 0.540099
+Train Epoch: 3 [96000/100000 (96%)]	Loss: 0.701269
+
+Train set: Average loss: 0.8888, Accuracy: 73708/100000 (73.7%)
+
+
+Test set test: Average loss: 1.2963, Accuracy: 6611/10000 (66.110%)
+
+Test set test_counterfactual: Average loss: 1.3019, Accuracy: 6577/10000 (65.770%)
+
+Test set test_counterfactual_rot: Average loss: 7.5520, Accuracy: 2687/10000 (26.870%)
+
+Test set test_counterfactual_rot_scale: Average loss: 8.1759, Accuracy: 2628/10000 (26.280%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 8.0724, Accuracy: 2496/10000 (24.960%)
+Train Epoch: 4 [0/100000 (0%)]	Loss: 0.866710
+Train Epoch: 4 [6400/100000 (6%)]	Loss: 0.572598
+Train Epoch: 4 [12800/100000 (13%)]	Loss: 0.564837
+Train Epoch: 4 [19200/100000 (19%)]	Loss: 0.331820
+Train Epoch: 4 [25600/100000 (26%)]	Loss: 0.601526
+Train Epoch: 4 [32000/100000 (32%)]	Loss: 0.562927
+Train Epoch: 4 [38400/100000 (38%)]	Loss: 0.709168
+Train Epoch: 4 [44800/100000 (45%)]	Loss: 0.532836
+Train Epoch: 4 [51200/100000 (51%)]	Loss: 0.454912
+Train Epoch: 4 [57600/100000 (58%)]	Loss: 0.482510
+Train Epoch: 4 [64000/100000 (64%)]	Loss: 0.587272
+Train Epoch: 4 [70400/100000 (70%)]	Loss: 0.697476
+Train Epoch: 4 [76800/100000 (77%)]	Loss: 0.634544
+Train Epoch: 4 [83200/100000 (83%)]	Loss: 0.549925
+Train Epoch: 4 [89600/100000 (90%)]	Loss: 0.434195
+Train Epoch: 4 [96000/100000 (96%)]	Loss: 0.406785
+
+Train set: Average loss: 0.5888, Accuracy: 81754/100000 (81.8%)
+
+
+Test set test: Average loss: 1.1519, Accuracy: 7244/10000 (72.440%)
+
+Test set test_counterfactual: Average loss: 1.1579, Accuracy: 7227/10000 (72.270%)
+
+Test set test_counterfactual_rot: Average loss: 5.4727, Accuracy: 3938/10000 (39.380%)
+
+Test set test_counterfactual_rot_scale: Average loss: 6.5845, Accuracy: 3516/10000 (35.160%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 6.4694, Accuracy: 3318/10000 (33.180%)
+Train Epoch: 5 [0/100000 (0%)]	Loss: 0.354400
+Train Epoch: 5 [6400/100000 (6%)]	Loss: 0.283728
+Train Epoch: 5 [12800/100000 (13%)]	Loss: 0.358858
+Train Epoch: 5 [19200/100000 (19%)]	Loss: 0.353693
+Train Epoch: 5 [25600/100000 (26%)]	Loss: 0.282987
+Train Epoch: 5 [32000/100000 (32%)]	Loss: 0.420907
+Train Epoch: 5 [38400/100000 (38%)]	Loss: 0.438066
+Train Epoch: 5 [44800/100000 (45%)]	Loss: 0.330308
+Train Epoch: 5 [51200/100000 (51%)]	Loss: 0.426946
+Train Epoch: 5 [57600/100000 (58%)]	Loss: 0.482952
+Train Epoch: 5 [64000/100000 (64%)]	Loss: 0.335157
+Train Epoch: 5 [70400/100000 (70%)]	Loss: 0.356969
+Train Epoch: 5 [76800/100000 (77%)]	Loss: 0.568963
+Train Epoch: 5 [83200/100000 (83%)]	Loss: 0.378340
+Train Epoch: 5 [89600/100000 (90%)]	Loss: 0.360679
+Train Epoch: 5 [96000/100000 (96%)]	Loss: 0.283793
+
+Train set: Average loss: 0.3440, Accuracy: 85633/100000 (85.6%)
+
+
+Test set test: Average loss: 1.3341, Accuracy: 7281/10000 (72.810%)
+
+Test set test_counterfactual: Average loss: 1.3396, Accuracy: 7283/10000 (72.830%)
+
+Test set test_counterfactual_rot: Average loss: 6.8231, Accuracy: 3839/10000 (38.390%)
+
+Test set test_counterfactual_rot_scale: Average loss: 9.0644, Accuracy: 3515/10000 (35.150%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 8.9739, Accuracy: 3304/10000 (33.040%)
+Train Epoch: 6 [0/100000 (0%)]	Loss: 0.334424
+Train Epoch: 6 [6400/100000 (6%)]	Loss: 0.214103
+Train Epoch: 6 [12800/100000 (13%)]	Loss: 0.282964
+Train Epoch: 6 [19200/100000 (19%)]	Loss: 0.326871
+Train Epoch: 6 [25600/100000 (26%)]	Loss: 0.284788
+Train Epoch: 6 [32000/100000 (32%)]	Loss: 0.256878
+Train Epoch: 6 [38400/100000 (38%)]	Loss: 0.458917
+Train Epoch: 6 [44800/100000 (45%)]	Loss: 0.189082
+Train Epoch: 6 [51200/100000 (51%)]	Loss: 0.278961
+Train Epoch: 6 [57600/100000 (58%)]	Loss: 0.319255
+Train Epoch: 6 [64000/100000 (64%)]	Loss: 0.301056
+Train Epoch: 6 [70400/100000 (70%)]	Loss: 0.222403
+Train Epoch: 6 [76800/100000 (77%)]	Loss: 0.474369
+Train Epoch: 6 [83200/100000 (83%)]	Loss: 0.454718
+Train Epoch: 6 [89600/100000 (90%)]	Loss: 0.386251
+Train Epoch: 6 [96000/100000 (96%)]	Loss: 0.411842
+
+Train set: Average loss: 0.2626, Accuracy: 87937/100000 (87.9%)
+
+
+Test set test: Average loss: 1.3105, Accuracy: 7478/10000 (74.780%)
+
+Test set test_counterfactual: Average loss: 1.2976, Accuracy: 7489/10000 (74.890%)
+
+Test set test_counterfactual_rot: Average loss: 8.0904, Accuracy: 3754/10000 (37.540%)
+
+Test set test_counterfactual_rot_scale: Average loss: 10.2481, Accuracy: 3475/10000 (34.750%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 10.1360, Accuracy: 3240/10000 (32.400%)
+Train Epoch: 7 [0/100000 (0%)]	Loss: 0.317535
+Train Epoch: 7 [6400/100000 (6%)]	Loss: 0.178122
+Train Epoch: 7 [12800/100000 (13%)]	Loss: 0.377402
+Train Epoch: 7 [19200/100000 (19%)]	Loss: 0.415384
+Train Epoch: 7 [25600/100000 (26%)]	Loss: 0.329293
+Train Epoch: 7 [32000/100000 (32%)]	Loss: 0.373877
+Train Epoch: 7 [38400/100000 (38%)]	Loss: 0.387130
+Train Epoch: 7 [44800/100000 (45%)]	Loss: 0.433874
+Train Epoch: 7 [51200/100000 (51%)]	Loss: 0.457059
+Train Epoch: 7 [57600/100000 (58%)]	Loss: 0.276313
+Train Epoch: 7 [64000/100000 (64%)]	Loss: 0.642406
+Train Epoch: 7 [70400/100000 (70%)]	Loss: 0.421146
+Train Epoch: 7 [76800/100000 (77%)]	Loss: 0.305188
+Train Epoch: 7 [83200/100000 (83%)]	Loss: 0.228768
+Train Epoch: 7 [89600/100000 (90%)]	Loss: 0.351141
+Train Epoch: 7 [96000/100000 (96%)]	Loss: 0.264667
+
+Train set: Average loss: 0.2434, Accuracy: 89380/100000 (89.4%)
+
+
+Test set test: Average loss: 1.7514, Accuracy: 7170/10000 (71.700%)
+
+Test set test_counterfactual: Average loss: 1.7572, Accuracy: 7130/10000 (71.300%)
+
+Test set test_counterfactual_rot: Average loss: 7.9817, Accuracy: 3949/10000 (39.490%)
+
+Test set test_counterfactual_rot_scale: Average loss: 10.6395, Accuracy: 3607/10000 (36.070%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 10.5256, Accuracy: 3384/10000 (33.840%)
+Train Epoch: 8 [0/100000 (0%)]	Loss: 0.281610
+Train Epoch: 8 [6400/100000 (6%)]	Loss: 0.153682
+Train Epoch: 8 [12800/100000 (13%)]	Loss: 0.297171
+Train Epoch: 8 [19200/100000 (19%)]	Loss: 0.271095
+Train Epoch: 8 [25600/100000 (26%)]	Loss: 0.242762
+Train Epoch: 8 [32000/100000 (32%)]	Loss: 0.416166
+Train Epoch: 8 [38400/100000 (38%)]	Loss: 0.447727
+Train Epoch: 8 [44800/100000 (45%)]	Loss: 0.464208
+Train Epoch: 8 [51200/100000 (51%)]	Loss: 0.300828
+Train Epoch: 8 [57600/100000 (58%)]	Loss: 0.384470
+Train Epoch: 8 [64000/100000 (64%)]	Loss: 0.262761
+Train Epoch: 8 [70400/100000 (70%)]	Loss: 0.260948
+Train Epoch: 8 [76800/100000 (77%)]	Loss: 0.334173
+Train Epoch: 8 [83200/100000 (83%)]	Loss: 0.341144
+Train Epoch: 8 [89600/100000 (90%)]	Loss: 0.167552
+Train Epoch: 8 [96000/100000 (96%)]	Loss: 0.227043
+
+Train set: Average loss: 0.1816, Accuracy: 90420/100000 (90.4%)
+
+
+Test set test: Average loss: 1.6636, Accuracy: 7390/10000 (73.900%)
+
+Test set test_counterfactual: Average loss: 1.6566, Accuracy: 7390/10000 (73.900%)
+
+Test set test_counterfactual_rot: Average loss: 7.8698, Accuracy: 4088/10000 (40.880%)
+
+Test set test_counterfactual_rot_scale: Average loss: 10.8171, Accuracy: 3719/10000 (37.190%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 10.7098, Accuracy: 3475/10000 (34.750%)
+Train Epoch: 9 [0/100000 (0%)]	Loss: 0.266242
+Train Epoch: 9 [6400/100000 (6%)]	Loss: 0.224441
+Train Epoch: 9 [12800/100000 (13%)]	Loss: 0.451272
+Train Epoch: 9 [19200/100000 (19%)]	Loss: 0.238039
+Train Epoch: 9 [25600/100000 (26%)]	Loss: 0.295988
+Train Epoch: 9 [32000/100000 (32%)]	Loss: 0.280135
+Train Epoch: 9 [38400/100000 (38%)]	Loss: 0.230280
+Train Epoch: 9 [44800/100000 (45%)]	Loss: 0.303321
+Train Epoch: 9 [51200/100000 (51%)]	Loss: 0.131162
+Train Epoch: 9 [57600/100000 (58%)]	Loss: 0.203313
+Train Epoch: 9 [64000/100000 (64%)]	Loss: 0.326209
+Train Epoch: 9 [70400/100000 (70%)]	Loss: 0.286556
+Train Epoch: 9 [76800/100000 (77%)]	Loss: 0.179368
+Train Epoch: 9 [83200/100000 (83%)]	Loss: 0.226142
+Train Epoch: 9 [89600/100000 (90%)]	Loss: 0.197241
+Train Epoch: 9 [96000/100000 (96%)]	Loss: 0.277258
+
+Train set: Average loss: 0.2418, Accuracy: 91104/100000 (91.1%)
+
+
+Test set test: Average loss: 1.6154, Accuracy: 7442/10000 (74.420%)
+
+Test set test_counterfactual: Average loss: 1.5964, Accuracy: 7479/10000 (74.790%)
+
+Test set test_counterfactual_rot: Average loss: 8.4068, Accuracy: 4007/10000 (40.070%)
+
+Test set test_counterfactual_rot_scale: Average loss: 11.6983, Accuracy: 3728/10000 (37.280%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 11.6226, Accuracy: 3468/10000 (34.680%)
+Train Epoch: 10 [0/100000 (0%)]	Loss: 0.314142
+Train Epoch: 10 [6400/100000 (6%)]	Loss: 0.195206
+Train Epoch: 10 [12800/100000 (13%)]	Loss: 0.181223
+Train Epoch: 10 [19200/100000 (19%)]	Loss: 0.209749
+Train Epoch: 10 [25600/100000 (26%)]	Loss: 0.142850
+Train Epoch: 10 [32000/100000 (32%)]	Loss: 0.369048
+Train Epoch: 10 [38400/100000 (38%)]	Loss: 0.218200
+Train Epoch: 10 [44800/100000 (45%)]	Loss: 0.283802
+Train Epoch: 10 [51200/100000 (51%)]	Loss: 0.309695
+Train Epoch: 10 [57600/100000 (58%)]	Loss: 0.192066
+Train Epoch: 10 [64000/100000 (64%)]	Loss: 0.218785
+Train Epoch: 10 [70400/100000 (70%)]	Loss: 0.410660
+Train Epoch: 10 [76800/100000 (77%)]	Loss: 0.119337
+Train Epoch: 10 [83200/100000 (83%)]	Loss: 0.295612
+Train Epoch: 10 [89600/100000 (90%)]	Loss: 0.214967
+Train Epoch: 10 [96000/100000 (96%)]	Loss: 0.387884
+
+Train set: Average loss: 0.2383, Accuracy: 91563/100000 (91.6%)
+
+
+Test set test: Average loss: 1.7110, Accuracy: 7435/10000 (74.350%)
+
+Test set test_counterfactual: Average loss: 1.7074, Accuracy: 7449/10000 (74.490%)
+
+Test set test_counterfactual_rot: Average loss: 9.4887, Accuracy: 3875/10000 (38.750%)
+
+Test set test_counterfactual_rot_scale: Average loss: 12.5529, Accuracy: 3588/10000 (35.880%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 12.4137, Accuracy: 3363/10000 (33.630%)
