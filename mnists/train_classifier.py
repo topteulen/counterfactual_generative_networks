@@ -16,6 +16,7 @@ from mnists.dataloader import get_tensor_dataloaders, TENSOR_DATASETS
 import numpy as np
 
 import json
+import os
 
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
@@ -96,6 +97,8 @@ def main(args):
     results_dict['results']['train'] = []
     for epoch in range(1, args.epochs + 1):
         train_loss, train_correct, train_len = train(args, model, device, dl_train, optimizer, epoch)
+        os.makedirs(f'mnists/results/checkpoints/{args.model}', exist_ok=True)
+        torch.save(model.state_dict(), f'mnists/results/checkpoints/{args.model}/{args.dataset}_{epoch}.pth')
         results_dict['results']['train'].append({'loss': train_loss, 'accuracy': 100 * train_correct/train_len})
         for name, dl in dl_test.items():
             test_loss, test_correct, test_len = test(model, device, dl, name)

@@ -105,7 +105,7 @@ class DoubleColoredMNIST(Dataset):
         obj_colors = torch.normal(0, 0.01, (self.labels.shape[0], 3, 1, 1))
         back_colors = torch.normal(0, 0.01, (self.labels.shape[0], 3, 1, 1))
         # set the labels for each image (test gets counterfactual labels)
-        if train:
+        if not counterfactual:
             labels = np.array(self.labels)
         else:
             labels = np.random.randint(10, size=(self.labels.shape[0]))
@@ -181,7 +181,7 @@ class WildlifeMNIST(Dataset):
         object_textures = np.array(list(map(open_image_plus_transform, object_textures)))
 
         # set the labels for each image (test gets counterfactual labels)
-        if train:
+        if not counterfactual:
             labels = np.array(self.labels)
         else:
             labels = np.random.randint(10, size=(self.labels.shape[0]))
