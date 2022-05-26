@@ -31,21 +31,23 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
             transforms.RandomAffine(**kwargs, interpolation=InterpolationMode.BILINEAR),
         ])
 
-        with torch.no_grad():
-            for i, m in enumerate(mask):
-                mask[i] = transform(m)
+        mask_org = mask.clone()
 
         # generate counterfactuals, i.e., same masks, foreground/background vary
         for _ in range(no_cfs):
+            with torch.no_grad():
+                for i, m in enumerate(mask_org):
+                    mask[i] = transform(m)
+
             _, foreground, background = cgn(y_gen, counterfactual=True)
             x_gen = mask * foreground + (1 - mask) * background
 
             x.append(x_gen.detach().cpu())
             y.append(y_gen.detach().cpu())
 
-    dataset = [torch.cat(x), torch.cat(y)]
-    print(f"x shape {dataset[0].shape}, y shape {dataset[1].shape}")
-    torch.save(dataset, 'mnists/data/' + path)
+    dataset_y = torch.cat(y)
+    print(f"x shape {len(x)*x[0].shape[0]}, y shape {dataset_y.shape}")
+    torch.save([x, dataset_y], 'mnists/data/' + path)
 
 def generate_dataset(dl, path):
     x, y = [], []
