@@ -47,7 +47,7 @@ def generate_cf_dataset(cgn, path, dataset_size, no_cfs, device, **kwargs):
 
     dataset_y = torch.cat(y)
     print(f"x shape {len(x)*x[0].shape[0]}, y shape {dataset_y.shape}")
-    torch.save([x, dataset_y], 'mnists/data/' + path)
+    torch.save([torch.cat(x), dataset_y], 'mnists/data/' + path)
 
 def generate_dataset(dl, path):
     x, y = [], []

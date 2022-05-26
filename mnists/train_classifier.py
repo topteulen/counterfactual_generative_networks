@@ -127,7 +127,7 @@ if __name__ == '__main__':
                         help='learning rate (default: 1.0)')
     parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
                         help='Learning rate step gamma (default: 0.7)')
-    parser.add_argument('--log-interval', type=int, default=100, metavar='N',
+    parser.add_argument('--log-interval', type=int, default=1000, metavar='N',
                         help='how many batches to wait before logging training status')
     parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","C8SteerableCNNSmall", "SO2SteerableCNN","SES","SES_V"])
     args = parser.parse_args()
