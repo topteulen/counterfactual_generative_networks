@@ -19,7 +19,7 @@ for dataset in ["colored_MNIST", "wildlife_MNIST"]:
             cmd = f'python mnists/generate_data.py --dataset {dataset}'
         os.system(cmd)
         
-        for model in models[:4]:            
+        for model in models[4:]:            
             cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model} --epochs 3'
             print(f"\nRunning:\n {cmd}\n")
             result = subprocess.check_output(cmd, shell=True, text=True)
