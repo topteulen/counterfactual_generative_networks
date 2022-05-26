@@ -9,7 +9,7 @@ additions = ['', '_counterfactual', '_counterfactual_rot', '_counterfactual_rot_
 
 
 
-for dataset in datasets[1:2]:
+for dataset in ["colored_MNIST", "wildlife_MNIST"]:
     for addition in additions:
         if "counterfactual" in addition:
             affine_transform = '--affine_transform ' + '_'.join(addition.split('_')[2:]) if 'rot' in addition else ''
