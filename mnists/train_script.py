@@ -22,7 +22,7 @@ for dataset in datasets:
             --dataset {dataset} --no_cfs 100 --dataset_size 1000000 {affine_transform}"
         else:
             cmd = f'python mnists/generate_data.py --dataset {dataset}'
-            
+
         print(f"execute {cmd}")
         os.system(cmd)
 
