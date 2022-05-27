@@ -1,0 +1,32 @@
+Namespace(dataset='wildlife_MNIST', batch_size=64, epochs=2, lr=1.0, gamma=0.7, log_interval=1000, model='C8SteerableCNN')
+
+Number of trainable parameters: 2068298
+
+Train Epoch: 1 [0/50000 (0%)]	Loss: 2.581424
+
+Train set: Average loss: 0.0003, Accuracy: 49935/50000 (99.9%)
+
+
+Test set test: Average loss: 1.2730, Accuracy: 6834/10000 (68.340%)
+
+Test set test_counterfactual: Average loss: 5.8515, Accuracy: 1075/10000 (10.750%)
+
+Test set test_counterfactual_rot: Average loss: 5.3154, Accuracy: 1119/10000 (11.190%)
+
+Test set test_counterfactual_rot_scale: Average loss: 5.0615, Accuracy: 1022/10000 (10.220%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 5.0924, Accuracy: 956/10000 (9.560%)
+Train Epoch: 2 [0/50000 (0%)]	Loss: 0.000203
+
+Train set: Average loss: 0.0004, Accuracy: 50000/50000 (100.0%)
+
+
+Test set test: Average loss: 1.3248, Accuracy: 6830/10000 (68.300%)
+
+Test set test_counterfactual: Average loss: 6.1622, Accuracy: 1056/10000 (10.560%)
+
+Test set test_counterfactual_rot: Average loss: 5.6125, Accuracy: 1123/10000 (11.230%)
+
+Test set test_counterfactual_rot_scale: Average loss: 5.3119, Accuracy: 1035/10000 (10.350%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 5.3589, Accuracy: 952/10000 (9.520%)

@@ -1,0 +1,32 @@
+Namespace(dataset='wildlife_MNIST', batch_size=64, epochs=2, lr=1.0, gamma=0.7, log_interval=1000, model='SES_V')
+
+Number of trainable parameters: 619285
+
+Train Epoch: 1 [0/50000 (0%)]	Loss: 2.541624
+
+Train set: Average loss: 0.0005, Accuracy: 49921/50000 (99.8%)
+
+
+Test set test: Average loss: 1.7652, Accuracy: 5326/10000 (53.260%)
+
+Test set test_counterfactual: Average loss: 5.1819, Accuracy: 1138/10000 (11.380%)
+
+Test set test_counterfactual_rot: Average loss: 5.1573, Accuracy: 1034/10000 (10.340%)
+
+Test set test_counterfactual_rot_scale: Average loss: 4.8837, Accuracy: 998/10000 (9.980%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 5.1666, Accuracy: 940/10000 (9.400%)
+Train Epoch: 2 [0/50000 (0%)]	Loss: 0.000114
+
+Train set: Average loss: 0.0001, Accuracy: 50000/50000 (100.0%)
+
+
+Test set test: Average loss: 1.8461, Accuracy: 5957/10000 (59.570%)
+
+Test set test_counterfactual: Average loss: 5.5815, Accuracy: 1013/10000 (10.130%)
+
+Test set test_counterfactual_rot: Average loss: 5.2167, Accuracy: 1012/10000 (10.120%)
+
+Test set test_counterfactual_rot_scale: Average loss: 4.9235, Accuracy: 984/10000 (9.840%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 5.1295, Accuracy: 976/10000 (9.760%)
