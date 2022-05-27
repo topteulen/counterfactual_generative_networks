@@ -17,7 +17,7 @@ if not os.path.exists('mnists/data/colored_mnist/mnist_10color_jitter_var_0.020.
 if not os.path.exists("mnists/data/colored_mnist/mnist_10color_double_testsets_jitter_var_0.02_0.025.npy"):
     os.system('python mnists/scripts/create_coloured_mninst.py')
 
-for dataset in datasets[1:2]:
+for dataset in datasets[2:]:
     for addition in additions:
         if GENERATE_DATA:
             if "counterfactual" in addition:
@@ -30,8 +30,13 @@ for dataset in datasets[1:2]:
             print(f"execute {cmd}")
             os.system(cmd)
 
-        for model in models[:4]:
-            cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model} --epochs 3'
+        for model in models[:]:
+            cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model} --epochs 2'
+            file_loc = f'mnists/results/{model}_{dataset}{addition}_shell.txt'
+            if os.path.exists(file_loc):
+                print(f'skipping {cmd}')
+                continue
+            
             print(f"\nRunning:\n {cmd}\n")
             result = subprocess.check_output(cmd, shell=True, text=True)
             with open(f'mnists/results/{model}_{dataset}{addition}_shell.txt', 'w') as f:
