@@ -8,7 +8,7 @@ models = ["CNN","C8SteerableCNNSmall", "C8SteerableCNN", "SO2SteerableCNN","SES"
 
 datasets = ["colored_MNIST", "double_colored_MNIST", "wildlife_MNIST"]
 
-additions = ['_counterfactual_rot', '_counterfactual_rot_scale', '_counterfactual_rot_scale_shear', '', '_counterfactual']
+additions = ['_counterfactual', '_counterfactual_rot', '_counterfactual_rot_scale', '_counterfactual_rot_scale_shear', '']
 
 if not os.path.exists('mnists/data/colored_mnist/mnist_10color_jitter_var_0.020.npy'):
     print("download https://drive.google.com/u/0/uc?export=download&confirm=rHtT&id=1NSv4RCSHjcHois3dXjYw_PaLIoVlLgXu \nand unpack it in mnists/data")
@@ -17,7 +17,7 @@ if not os.path.exists('mnists/data/colored_mnist/mnist_10color_jitter_var_0.020.
 if not os.path.exists("mnists/data/colored_mnist/mnist_10color_double_testsets_jitter_var_0.02_0.025.npy"):
     os.system('python mnists/scripts/create_coloured_mninst.py')
 
-for dataset in datasets[2:]:
+for dataset in datasets:
     for addition in additions:
         if GENERATE_DATA:
             if "counterfactual" in addition:
@@ -32,6 +32,7 @@ for dataset in datasets[2:]:
 
         for model in models[:]:
             cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model} --epochs 2'
+            # cmd = f'python mnists/train_classifier.py --dataset {dataset}{addition} --model {model} --load_model --epochs 2'
             file_loc = f'mnists/results/{model}_{dataset}{addition}_shell.txt'
             if os.path.exists(file_loc):
                 print(f'skipping {cmd}')

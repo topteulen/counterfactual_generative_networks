@@ -1,0 +1,28 @@
+Namespace(dataset='colored_MNIST_counterfactual_rot_scale', batch_size=64, epochs=2, lr=1.0, gamma=0.7, log_interval=1000, model='SES_V', load_model=True)
+
+Number of trainable parameters: 619285
+
+
+Test set test: Average loss: 0.5287, Accuracy: 8751/10000 (87.510%)
+
+Test set test_counterfactual: Average loss: 0.6441, Accuracy: 8565/10000 (85.650%)
+
+Test set test_counterfactual_rot: Average loss: 0.5918, Accuracy: 8610/10000 (86.100%)
+
+Test set test_counterfactual_rot_scale: Average loss: 0.6825, Accuracy: 8408/10000 (84.080%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 1.0338, Accuracy: 7888/10000 (78.880%)
+
+Test set test_counterfactual_scale: Average loss: 0.7160, Accuracy: 8344/10000 (83.440%)
+
+Test set test: Average loss: 0.4781, Accuracy: 8956/10000 (89.560%)
+
+Test set test_counterfactual: Average loss: 0.6483, Accuracy: 8730/10000 (87.300%)
+
+Test set test_counterfactual_rot: Average loss: 0.6407, Accuracy: 8633/10000 (86.330%)
+
+Test set test_counterfactual_rot_scale: Average loss: 0.7695, Accuracy: 8441/10000 (84.410%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 1.2240, Accuracy: 7894/10000 (78.940%)
+
+Test set test_counterfactual_scale: Average loss: 0.7151, Accuracy: 8564/10000 (85.640%)

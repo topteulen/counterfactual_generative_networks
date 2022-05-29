@@ -93,24 +93,37 @@ def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
 
-    results_dict = {'results': {name: [] for name, _ in dl_test.items()}}
-    results_dict['results']['train'] = []
+    if args.load_model:
+        f = open(f'mnists/results/{args.model}_{args.dataset}.json')
+        results_dict = json.load(f)
+        f.close()
+        train_res = results_dict['results']['train']
+        results_dict['results'] = {name: ['' for _ in range(args.epochs)] for name, _ in dl_test.items()}
+        results_dict['results']['train'] = train_res
+    else:
+        results_dict = {'results': {name: ['' for _ in range(args.epochs)] for name, _ in dl_test.items()}}
+        results_dict['results']['train'] = []
     for epoch in range(1, args.epochs + 1):
-        train_loss, train_correct, train_len = train(args, model, device, dl_train, optimizer, epoch)
-        os.makedirs(f'mnists/results/checkpoints/{args.model}', exist_ok=True)
-        torch.save(model.state_dict(), f'mnists/results/checkpoints/{args.model}/{args.dataset}_{epoch}.pth')
-        results_dict['results']['train'].append({'loss': train_loss, 'accuracy': 100 * train_correct/train_len})
+        if not args.load_model:
+            train_loss, train_correct, train_len = train(args, model, device, dl_train, optimizer, epoch)
+            os.makedirs(f'mnists/results/checkpoints/{args.model}', exist_ok=True)
+            torch.save(model.state_dict(), f'mnists/results/checkpoints/{args.model}/{args.dataset}_{epoch}.pth')
+            results_dict['results']['train'].append({'loss': train_loss, 'accuracy': 100 * train_correct/train_len})
+        else:
+            model.load_state_dict(torch.load(f'mnists/results/checkpoints/{args.model}/{args.dataset}_{epoch}.pth'), strict=False)     
         for name, dl in dl_test.items():
             test_loss, test_correct, test_len = test(model, device, dl, name)
-            results_dict['results'][name].append({'loss': test_loss, 'accuracy': 100 * test_correct/test_len})
-        scheduler.step()
+            results_dict['results'][name][epoch-1] = {'loss': test_loss, 'accuracy': 100 * test_correct/test_len}
+        if not args.load_model:
+            scheduler.step()
 
-    results_dict['train_len'] = train_len
+    if not args.load_model:
+        results_dict['train_len'] = train_len
     results_dict['test_len'] = test_len
     results_dict['dataset'] = args.dataset
     results_dict['num_params'] = float(params)
 
-    with open(f'mnists/results/{args.model}_{args.dataset}.json', 'w') as f:
+    with open(f'mnists/results/{args.model}_{args.dataset}{"_reloaded" if args.load_model else ""}.json', 'w') as f:
         json.dump(results_dict, f)
     f.close()
 
@@ -130,6 +143,7 @@ if __name__ == '__main__':
     parser.add_argument('--log-interval', type=int, default=1000, metavar='N',
                         help='how many batches to wait before logging training status')
     parser.add_argument('--model',type=str, default="CNN", choices=["CNN","C8SteerableCNN","C8SteerableCNNSmall", "SO2SteerableCNN","SES","SES_V"])
+    parser.add_argument('--load_model', action=argparse.BooleanOptionalAction, help='loads model from checkpoint if set')
     args = parser.parse_args()
 
     print(args)

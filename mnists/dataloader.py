@@ -65,10 +65,10 @@ class ColoredMNIST(Dataset):
         else:
             self.ims = data_dic['counterfactual_image']
             self.labels = tensor(data_dic['counterfactual_label'], dtype=torch.long)
-            if (rotate is not None):
+            if (rotate is not None or scale is not None):
                 transform += [
                     transforms.Pad(14, fill=-1, padding_mode='constant'),
-                    transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
+                    transforms.RandomAffine(degrees=rotate if rotate is not None else 0, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
                     transforms.CenterCrop(32),
                 ]
 
@@ -139,10 +139,10 @@ class DoubleColoredMNIST(Dataset):
                                  (0.5, 0.5, 0.5)),
         ]
 
-        if (rotate is not None):
+        if (rotate is not None or scale is not None):
             transform += [
                 transforms.Pad(14, fill=-1, padding_mode='constant'),
-                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
+                transforms.RandomAffine(degrees=rotate if rotate is not None else 0, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
                 transforms.CenterCrop(32),
             ]
 
@@ -214,10 +214,10 @@ class WildlifeMNIST(Dataset):
                                  (0.5, 0.5, 0.5)),
         ]
 
-        if (rotate is not None):
+        if (rotate is not None or scale is not None):
             transform += [
                 transforms.Pad(14, fill=-1, padding_mode='constant'),
-                transforms.RandomAffine(degrees=rotate, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
+                transforms.RandomAffine(degrees=rotate if rotate is not None else 0, translate=translate, scale=scale, shear=shear, fill=-1, interpolation=InterpolationMode.BILINEAR),
                 transforms.CenterCrop(self.mnist_sz),
             ]
 
@@ -246,6 +246,7 @@ def get_dataloaders(dataset, batch_size, workers):
     ds_train = MNIST(train=True)
     ds_test = {"test" :                               MNIST(train=False, counterfactual=False),
                "test_counterfactual":                 MNIST(train=False, counterfactual=True, rotate=None,translate=None,         scale=None,       shear=None),
+               "test_counterfactual_scale":           MNIST(train=False, counterfactual=True, rotate=None,translate=None,         scale=(0.5, 1.5), shear=None),
                "test_counterfactual_rot":             MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=None,       shear=None),
                "test_counterfactual_rot_scale":       MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=None),
                "test_counterfactual_rot_scale_shear": MNIST(train=False, counterfactual=True, rotate=180, translate=(0.05, 0.05), scale=(0.5, 1.5), shear=30)}
