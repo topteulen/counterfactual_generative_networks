@@ -1,0 +1,28 @@
+Namespace(dataset='wildlife_MNIST_counterfactual_rot', batch_size=64, epochs=2, lr=1.0, gamma=0.7, log_interval=1000, model='SO2SteerableCNN', load_model=True)
+
+Number of trainable parameters: 513258
+
+
+Test set test: Average loss: 20.1549, Accuracy: 2802/10000 (28.020%)
+
+Test set test_counterfactual: Average loss: 18.8413, Accuracy: 2774/10000 (27.740%)
+
+Test set test_counterfactual_rot: Average loss: 21.3892, Accuracy: 2397/10000 (23.970%)
+
+Test set test_counterfactual_rot_scale: Average loss: 21.6494, Accuracy: 1808/10000 (18.080%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 23.5160, Accuracy: 1646/10000 (16.460%)
+
+Test set test_counterfactual_scale: Average loss: 23.6189, Accuracy: 1831/10000 (18.310%)
+
+Test set test: Average loss: 12.2594, Accuracy: 4280/10000 (42.800%)
+
+Test set test_counterfactual: Average loss: 14.8330, Accuracy: 3891/10000 (38.910%)
+
+Test set test_counterfactual_rot: Average loss: 15.8771, Accuracy: 3583/10000 (35.830%)
+
+Test set test_counterfactual_rot_scale: Average loss: 16.1692, Accuracy: 2598/10000 (25.980%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 18.1757, Accuracy: 2301/10000 (23.010%)
+
+Test set test_counterfactual_scale: Average loss: 17.1464, Accuracy: 2684/10000 (26.840%)

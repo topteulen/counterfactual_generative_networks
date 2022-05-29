@@ -1,0 +1,28 @@
+Namespace(dataset='double_colored_MNIST', batch_size=64, epochs=2, lr=1.0, gamma=0.7, log_interval=1000, model='C8SteerableCNNSmall', load_model=True)
+
+Number of trainable parameters: 32554
+
+
+Test set test: Average loss: 0.0001, Accuracy: 10000/10000 (100.000%)
+
+Test set test_counterfactual: Average loss: 9.5167, Accuracy: 1118/10000 (11.180%)
+
+Test set test_counterfactual_rot: Average loss: 6.4059, Accuracy: 1087/10000 (10.870%)
+
+Test set test_counterfactual_rot_scale: Average loss: 6.1154, Accuracy: 1009/10000 (10.090%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 5.9932, Accuracy: 1027/10000 (10.270%)
+
+Test set test_counterfactual_scale: Average loss: 7.2626, Accuracy: 1141/10000 (11.410%)
+
+Test set test: Average loss: 0.0000, Accuracy: 10000/10000 (100.000%)
+
+Test set test_counterfactual: Average loss: 10.3012, Accuracy: 1119/10000 (11.190%)
+
+Test set test_counterfactual_rot: Average loss: 6.9497, Accuracy: 1087/10000 (10.870%)
+
+Test set test_counterfactual_rot_scale: Average loss: 6.6102, Accuracy: 1007/10000 (10.070%)
+
+Test set test_counterfactual_rot_scale_shear: Average loss: 6.4764, Accuracy: 1024/10000 (10.240%)
+
+Test set test_counterfactual_scale: Average loss: 7.8635, Accuracy: 1134/10000 (11.340%)
