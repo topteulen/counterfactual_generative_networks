@@ -1,3 +1,21 @@
+# Robust Counterfactual Generative Networks #
+
+This is an adaption of the GitHub implementation for Counterfactual Generative Networks, for which the README is displayed below. 
+
+This codebase is the codebase behind "Robust Counterfactual Networks"
+
+To replicate all our results, run:
+
+```Shell
+python mnists/train_classifier.py
+```
+
+Refer to this file to change the experimental set-ups and to find the individual commands.
+Note that in order to run this file you should first download [the dataset](https://drive.google.com/u/0/uc?export=download&confirm=rHtT&id=1NSv4RCSHjcHois3dXjYw_PaLIoVlLgXu) and unpack it in mnists/data.
+
+For the basic use of this repository, refer to the README below.
+
+
 # Counterfactual Generative Networks #
 
 #### [[Project]](https://sites.google.com/view/counterfactual-generation/home) [[PDF]](https://openreview.net/pdf?id=BXewfAYMmJw) [[Blog]](https://autonomousvision.github.io/cgn/) [[Music Video]](https://youtu.be/JDwaLueR35U) [[Colab]](https://colab.research.google.com/gist/xl-sr/ad93d3918e456fd4cd4aabdcaad87148/generating_counterfactuals.ipynb)
